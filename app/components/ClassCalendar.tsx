@@ -32,7 +32,7 @@ export default function ClassCalendar({
    */
   const timeSlots: string[] = [];
   for (let hour = 6; hour <= 21; hour++) {
-    for (let quarter = 0; quarter < 60; quarter += 30) {
+    for (let quarter = 0; quarter < 60; quarter += 15) {
       const hh = hour.toString().padStart(2, "0");
       const mm = quarter.toString().padStart(2, "0");
       timeSlots.push(`${hh}:${mm}`);

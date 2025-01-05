@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/app/utils/supabase"; 
+import { supabase } from "@/app/utils/supabase";
 import {
   parseISO,
   isValid,
@@ -48,19 +48,19 @@ export default function MyUpcomingClasses({ userId }: MyUpcomingClassesProps) {
       // Because your foreign key is returning an array, it’s likely a 1-to-many relationship
       // in Supabase. We'll handle that as an array.
       const { data, error } = await supabase
-        .from("class_registrations")
-        .select(`
-          status,
-          class_schedules (
-            id,
-            class_name,
-            start_time,
-            end_time
-          )
-        `)
-        .eq("user_profile_id", userId)
-        .gte("class_schedules.start_time", nowISO)
-        .order("class_schedules.start_time", { ascending: true });
+      .from("class_registrations")
+      .select(`
+        status,
+        class_schedules (
+          id,
+          class_name,
+          start_time,
+          end_time
+        )
+      `)
+      .eq("user_profile_id", userId)
+      .gte("class_schedules.start_time", nowISO)
+      .order("start_time", { ascending: true, foreignTable: "class_schedules" });
 
       if (error) {
         setError(error.message);

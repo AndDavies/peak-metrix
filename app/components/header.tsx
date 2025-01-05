@@ -40,6 +40,9 @@ export function Header() {
           <Link href="/classes" className="hover:text-pink-500 transition">
             Classes
           </Link>
+          <Link href="/programming" className="hover:text-pink-500 transition">
+              Workouts
+            </Link>
         </nav>
 
         {/* Desktop: User Info & Logout */}
@@ -82,6 +85,9 @@ export function Header() {
             </Link>
             <Link href="/classes" onClick={() => setMobileMenuOpen(false)}>
               Classes
+            </Link>
+            <Link href="/programming" className="hover:text-pink-500 transition">
+              Workouts
             </Link>
 
             <div className="mt-6 flex items-center space-x-2">

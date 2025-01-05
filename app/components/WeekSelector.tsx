@@ -17,7 +17,7 @@ export default function WeekSelector({
   onToday,
 }: WeekSelectorProps) {
   return (
-    <div className="bg-gray-800 border border-gray-700 rounded-xl shadow p-4 flex flex-col items-center justify-center h-32 space-y-2 w-48">
+    <div className="bg-[#1F1F1F] border border-gray-700 rounded-xl shadow p-4 flex flex-col items-center justify-center h-32 space-y-2 w-48">
       <div className="flex items-center justify-between w-full px-4">
         <button
           onClick={onPreviousWeek}

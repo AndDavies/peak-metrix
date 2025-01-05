@@ -179,6 +179,7 @@ export default function ClassesClient() {
    * Fetch Class Types
    */
   const fetchClassTypes = useCallback(async () => {
+    //console.log("In Fetching Class Types", userData?.current_gym_id);
     if (!userData?.current_gym_id) return;
     const { data, error } = await supabase
       .from("class_types")
@@ -207,6 +208,8 @@ export default function ClassesClient() {
   useEffect(() => {
     if (!isLoading && userData) {
       initializeWeekDates();
+      fetchSchedules();
+      fetchClassTypes();
 
       // If the gym changed since last time, re-fetch
       if (gymIdRef.current !== userData.current_gym_id) {
@@ -273,7 +276,7 @@ export default function ClassesClient() {
           </div>
 
           {/* Class Types Card */}
-          <div className="flex-1 bg-[#1F1F1F] rounded-xl shadow-md border border-[#374151] p-4">
+          <div className="flex-1 bg-[#1F1F1F] rounded-xl shadow-md border border-[#374151] p-4 h-32">
             <h3 className="text-sm font-semibold border-b border-[#374151] pb-2">
               Class Types
             </h3>

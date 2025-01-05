@@ -44,15 +44,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Daily WOD */}
-        <Card className="bg-neutral-900 border border-neutral-800 hover:shadow-md transition">
-          <CardHeader className="flex flex-col items-start space-y-2 p-4">
-            <BarChart2 className="text-pink-500" size={32} />
-            <CardTitle className="text-white">Daily WOD</CardTitle>
-            <CardDescription className="text-gray-400">
-              Preview your workout of the day.
-            </CardDescription>
-          </CardHeader>
-        </Card>
+        <MyUpcomingClasses userId={userData.user_id || ""} />
 
         {/* Goal Tracker */}
         <Card className="bg-neutral-900 border border-neutral-800 hover:shadow-md transition">
