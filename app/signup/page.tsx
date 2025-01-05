@@ -1,8 +1,7 @@
-// app/signup/page.tsx
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase"; 
 import { Button } from "@/components/ui/button";
 
@@ -14,11 +13,11 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // We'll store gymId from the query param if present
+  // Gym ID from query
   const [gymId, setGymId] = useState<string | null>(null);
 
   useEffect(() => {
-    const g = searchParams?.get("gym_id");
+    const g = searchParams.get("gym_id");
     if (g) setGymId(g);
   }, [searchParams]);
 
@@ -27,18 +26,14 @@ export default function SignupPage() {
     setErrorMsg(null);
 
     try {
-      // 1) Create user in Supabase auth
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+      // Create user in Supabase auth
+      const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) {
         setErrorMsg(error.message);
         return;
       }
 
-      // 2) If using a database trigger to auto-insert user_profiles row, 
-      //    we just do an UPDATE to set current_gym_id if gymId is present.
+      // If there's a gymId and user was created, update user_profiles
       if (gymId && data.user) {
         await supabase
           .from("user_profiles")
@@ -46,10 +41,8 @@ export default function SignupPage() {
           .eq("user_id", data.user.id);
       }
 
-      // Show success or redirect. 
-      // If you have email confirmation on, they'll need to confirm. 
-      // Otherwise, they might be logged in automatically.
-      //router.push("/login");
+      // Redirect to login or wherever you want
+      router.push("/login");
     } catch (err: any) {
       setErrorMsg(err.message || "Unknown error");
     }

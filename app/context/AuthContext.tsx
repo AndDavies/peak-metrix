@@ -1,6 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useCallback,
+} from "react";
 import {
   Session,
   createClientComponentClient,
@@ -55,29 +62,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [userData, setUserData] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Fetch user_profiles row
-  const fetchUserData = async (s: Session) => {
-    // Example: selecting just user_id and display_name
-    const { data, error } = await supabaseClient
-      .from("user_profiles")
-      .select("user_id, display_name")
-      .eq("user_id", s.user.id)
-      .maybeSingle();
+  /**
+   * Wrap fetchUserData in useCallback so it's stable across renders.
+   * This way we can include it in dependency arrays without re-triggering.
+   */
+  const fetchUserData = useCallback(
+    async (s: Session) => {
+      try {
+        const { data, error } = await supabaseClient
+          .from("user_profiles")
+          .select("user_id, display_name")
+          .eq("user_id", s.user.id)
+          .maybeSingle();
 
-    if (error) {
-      console.error("[fetchUserData] error:", error.message);
-      setUserData(null);
-      return;
-    }
-    if (data) {
-      setUserData({
-        user_id: data.user_id ?? null,
-        display_name: data.display_name ?? null,
-      });
-    } else {
-      setUserData(null);
-    }
-  };
+        if (error) {
+          console.error("[fetchUserData] error:", error.message);
+          setUserData(null);
+          return;
+        }
+        if (data) {
+          setUserData({
+            user_id: data.user_id ?? null,
+            display_name: data.display_name ?? null,
+          });
+        } else {
+          setUserData(null);
+        }
+      } catch (err: any) {
+        console.error("[fetchUserData] unexpected error:", err.message);
+        setUserData(null);
+      }
+    },
+    [supabaseClient]
+  );
 
   // The nuclear logout
   const supabaseLogout = async () => {
@@ -92,14 +109,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(null);
       setUserData(null);
 
-      // 4) Finally, navigate them to homepage
+      // 4) Navigate them to homepage
       router.push("/");
     } catch (err) {
       console.error("[supabaseLogout] error:", err);
     }
   };
 
-  // Subscribe to changes in the Supabase auth state
+  /**
+   * Subscribe to auth state changes (SIGN_IN, SIGN_OUT, TOKEN_REFRESH, etc.).
+   * This does NOT re-run if user simply tabs away—only triggers on actual auth changes.
+   */
   useEffect(() => {
     const {
       data: { subscription },
@@ -119,9 +139,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabaseClient]);
+  }, [supabaseClient, fetchUserData]);
 
-  // On mount, get existing session
+  /**
+   * On initial mount, check if there's an existing session.
+   * If so, fetch the user data. This also runs only once, not on tab focus.
+   */
   useEffect(() => {
     const init = async () => {
       setIsLoading(true);
@@ -138,7 +161,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(false);
     };
     init();
-  }, [supabaseClient]);
+  }, [supabaseClient, fetchUserData]);
 
   return (
     <AuthContext.Provider
