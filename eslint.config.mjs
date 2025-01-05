@@ -16,6 +16,7 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "off", // Disable "no-explicit-any" rule
       "@typescript-eslint/no-unused-vars": "warn", // Show warnings for unused vars
       "react/no-unescaped-entities": "off", // Disable escaping of characters
+      "@typescript-eslint/no-unused-vars": "warn",
     },
   },
 ];
