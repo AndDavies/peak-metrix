@@ -56,7 +56,7 @@ export default function DashboardPage() {
         <Card className="bg-neutral-900 border border-neutral-800 hover:shadow-md transition">
           <CardHeader className="flex flex-col items-start space-y-2 p-4">
             <Target className="text-pink-500" size={32} />
-            <CardTitle className="text-white">Goal Tracker</CardTitle>
+            <CardTitle className="text-white">Goal Trackerr</CardTitle>
             <CardDescription className="text-gray-400">
               Monitor progress towards personal records.
             </CardDescription>
