@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { supabase } from "@/utils/supabase"; 
+import { supabase } from "@/app/utils/supabase"; 
 import { Button } from "@/components/ui/button";
 
 export default function SignupClient() {

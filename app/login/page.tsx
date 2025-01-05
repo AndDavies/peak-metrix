@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/AuthContext";
-import { supabase } from "@/utils/supabase"; // or create your own client
+import { supabase } from "@/app/utils/supabase"; // or create your own client
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 

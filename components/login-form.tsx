@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/utils/supabase";
+import { supabase } from "@/app/utils/supabase";
 import { Button } from "@/components/ui/button";
 
 export function LoginForm() {

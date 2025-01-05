@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const { data, error } = await supabaseClient
           .from("user_profiles")
-          .select("user_id, display_name")
+          .select("user_id, display_name, current_gym_id, role, onboarding_completed, goals")
           .eq("user_id", s.user.id)
           .maybeSingle();
 
@@ -84,6 +84,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUserData({
             user_id: data.user_id ?? null,
             display_name: data.display_name ?? null,
+            current_gym_id: data.current_gym_id ?? null,
+            role: data.role ?? null,
+            
+            goals: data.goals ?? null,
+            
           });
         } else {
           setUserData(null);

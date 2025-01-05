@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
-import { supabase } from "@/utils/supabase";
+import { supabase } from "@/app/utils/supabase";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Circle, CheckCircle } from "lucide-react";
