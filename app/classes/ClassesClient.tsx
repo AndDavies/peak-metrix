@@ -119,7 +119,8 @@ export default function ClassesClient() {
     const classIds = (schedulesData || []).map((c) => c.id);
 
     // We want to get confirmed_count for each schedule
-    let countsMap = new Map<string, number>();
+    const countsMap = new Map<string, number>();
+
     if (classIds.length > 0) {
       const { data: regData, error: regError } = await supabase
         .from("class_registrations")

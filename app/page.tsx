@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 // Lucide icons
-import { BarChart2, UserCheck, Brain, UserPlus, ClipboardCheck, TrendingUp } from "lucide-react";
+import { BarChart2, UserCheck, Brain } from "lucide-react";
 
 export default function LandingPage() {
   return (

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { BarChart2, Target, ShoppingCart, Clock } from "lucide-react";
+import { Target, ShoppingCart, Clock } from "lucide-react";
 import MyUpcomingClasses from "../components/dashboard/MyUpcomingClasses";
 
 
