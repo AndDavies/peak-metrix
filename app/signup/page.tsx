@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+/**
+ * If you still get errors, add the line below:
+ * export const dynamic = "force-dynamic";
+ * That tells Next.js to skip static pre-render and rely on the client.
+ */
+
+// import React (optional, in Next.js 13 it’s not strictly required)
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase"; 
 import { Button } from "@/components/ui/button";
 
@@ -13,9 +20,10 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Gym ID from query
+  // If you have an optional gym_id
   const [gymId, setGymId] = useState<string | null>(null);
 
+  // Capture the query param "gym_id" in a client-side effect
   useEffect(() => {
     const g = searchParams.get("gym_id");
     if (g) setGymId(g);
@@ -26,14 +34,16 @@ export default function SignupPage() {
     setErrorMsg(null);
 
     try {
-      // Create user in Supabase auth
+      // 1) Create user in Supabase Auth
       const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) {
         setErrorMsg(error.message);
         return;
       }
 
-      // If there's a gymId and user was created, update user_profiles
+      // 2) If your DB trigger doesn't auto-insert user_profiles, you can do so here. 
+      //    Otherwise, if the row is created automatically, 
+      //    we can update current_gym_id if needed:
       if (gymId && data.user) {
         await supabase
           .from("user_profiles")
@@ -41,7 +51,7 @@ export default function SignupPage() {
           .eq("user_id", data.user.id);
       }
 
-      // Redirect to login or wherever you want
+      // 3) Redirect to login or wherever
       router.push("/login");
     } catch (err: any) {
       setErrorMsg(err.message || "Unknown error");
