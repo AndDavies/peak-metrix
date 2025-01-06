@@ -31,7 +31,7 @@ export default function LandingPage() {
           />
 
           <div className="flex items-center space-x-8 text-white font-medium">
-            <a href="#features" className="hover:text-pink-500 transition">
+            {/* <a href="#features" className="hover:text-pink-500 transition">
               Features
             </a>
             <a href="#how-it-works" className="hover:text-pink-500 transition">
@@ -42,7 +42,7 @@ export default function LandingPage() {
             </a>
             <a href="#contact" className="hover:text-pink-500 transition">
               Contact
-            </a>
+            </a> */}
 
             <Link href="/signup">
               <Button variant="outline" className="border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white">

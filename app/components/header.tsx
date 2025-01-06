@@ -13,7 +13,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { userData, supabaseLogout } = useAuth();
 
-  const userPhoto = userData?.profile_picture || "/images/default-avatar.png";
+  const userPhoto = userData?.profile_picture || "/default-avatar.png";
   const displayName = userData?.display_name || "Guest";
 
   return (

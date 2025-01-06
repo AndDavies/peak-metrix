@@ -16,7 +16,7 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!isLoading && userData) {
       if (userData.onboarding_completed === true) {
-        router.push("/onboarding");
+       // router.push("/onboarding");
       }
     }
   }, [isLoading, userData, router]);
